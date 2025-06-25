@@ -3,29 +3,30 @@ from database_handler import DatabaseHandler
 from tkinter import ttk
 
 class RegistrationForm(tk.Frame):
-    def __init__(self,parent): # parent is instance (MainApplication)
+    def __init__(self,parent , refresh_callback): # parent is instance (MainApplication)
         super().__init__(parent , padx= 10 , pady= 10)
+        self.refresh_callback= refresh_callback
 
         tk.Label(self, text =' FULL NAME ').pack(fill='x' )
-        self.name_entry = tk.Entry(self)
+        self.name_entry = tk.Entry(self,width=30 ,font= 20 )
         self.name_entry.pack(fill='x')
 
         tk.Label(self,text =' Email ').pack(fill='x')
-        self.email_entry = tk.Entry(self)
+        self.email_entry = tk.Entry(self,width=30 ,font= 20 )
         self.email_entry.pack(fill='x')
 
 
         tk.Label(self,text =' Age ').pack(fill='x')
-        self.age_spinbox = ttk.Spinbox(self,from_=18, to=100)
+        self.age_spinbox = ttk.Spinbox(self,from_=18, to=100 ,width= 30,font=20)
         self.age_spinbox.pack(fill='x')
 
-
+ 
         tk.Label(self,text =' Gender ').pack(fill='x')
         self.gender_rb = tk.StringVar()
-        tk.Radiobutton (self ,text="Male",variable=self.gender_rb , value= 'Male').pack(anchor='w')
-        tk.Radiobutton (self ,text= "Female ",variable=self.gender_rb ,value= 'Female').pack(anchor='w')
+        tk.Radiobutton (self ,text="Male",variable=self.gender_rb , value= 'Male',font=20).pack(anchor='w')
+        tk.Radiobutton (self ,text= "Female ",variable=self.gender_rb ,value= 'Female',font= 20 ).pack(anchor='w')
         
-        self.submit_button = tk.Button(self , text='Submit',command=self.submit_form) # submit_button as a reference just not as a function
+        self.submit_button = tk.Button(self , text='Submit',command=self.submit_form , font= 30) # submit_butt on as a reference just not as a function
         self.submit_button.pack(fill='x')
 
 
@@ -37,7 +38,9 @@ class RegistrationForm(tk.Frame):
 
         if name and email and age and gender :
             DatabaseHandler.insert_student(name,email,age,gender)
+            self.refresh_callback()
 
+            # Reset Form
             self.reset_form()
 
     def reset_form(self):
