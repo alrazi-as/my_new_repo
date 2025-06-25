@@ -1,5 +1,6 @@
 import tkinter as tk
-import database_handler~
+import database_handler
+from registration_form import RegistrationForm
 
 class MainApplication(tk.Tk): # inharitence tk from TK class
     def __init__(self):
@@ -9,9 +10,14 @@ class MainApplication(tk.Tk): # inharitence tk from TK class
         self.create_widgets()
 
     def create_widgets(self):
-        title_label =tk.Label(self,text="Students Mangement System " , font=('fancy text',60))
+        title_label =tk.Label(self,text="Students Mangement System " , font=('title_font',30))
         title_label.pack(side='top' ,fill= 'x')
+
+        self.registration_form = RegistrationForm(self) #new instance form
+        self.registration_form.pack(fill= 'y' , padx= 150 , pady= 150)  # OR pack(side = 'right')
+
 
 if __name__ == '__main__':
     app = MainApplication() # app is an instance of main application 
     app.mainloop()
+
