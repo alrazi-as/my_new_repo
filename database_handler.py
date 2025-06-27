@@ -30,6 +30,16 @@ class DatabaseHandler():
             return conn.execute('SELECT * FROM students').fetchall()
         
 
+    @staticmethod
+    def get_gender_distribution():
+        with DatabaseHandler._connect() as conn:
+            cursor = conn.execute('SELECT gender , COUNT(*) FROM students GROUP BY gender')
+            return cursor.fetchall()
+        
+    @staticmethod
+    def delete_all_students():
+        with DatabaseHandler._connect() as conn:
+            conn.execute('DELETE FROM students')
 
 DatabaseHandler.create_table()  # invoking and creat table to every method
          
